@@ -2,7 +2,7 @@ const path = {
   HOME: "/",
   LOGIN: "/login",
   TUTOR: "/tutor",
-  CALENDAR: "/lich-tutor",
+  CALENDAR: "/calendar",
   MYCALENDAR: "/lich-da-dat",
 };
 
