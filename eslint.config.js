@@ -9,6 +9,16 @@ import tsdoc from "eslint-plugin-tsdoc";
 
 export default [
   {
+    ignores: [
+      "commitlint.config.js",
+      "postcss.config.js",
+      "tailwind.config.js",
+      "vite.config.ts",
+      "node_modules",
+      "dist",
+    ],
+  },
+  {
     ignores: ["dist", "node_modules", "vite.config.ts", "eslint.config.js"],
   },
   js.configs.recommended,
