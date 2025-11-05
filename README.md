@@ -91,7 +91,7 @@ The project has built-in git hooks to ensure code quality:
 
    ```bash
    git fetch origin
-   git rebase origin/main
+   git rebase origin/Frontend
    ```
 
 4. **Push your branch to remote**
@@ -101,15 +101,15 @@ The project has built-in git hooks to ensure code quality:
    ```
 
 5. **Create a Pull Request (PR)**
-   Open a PR to merge your branch into `main` using the project’s PR template.
+   Open a PR to merge your branch into `Frontend` using the project’s PR template.
    Wait for review and approval before merging.
 
 6. **After Merge — Sync and Clean Up**
    Once your PR is merged:
 
    ```bash
-   git checkout main
-   git pull origin main
+   git checkout Frontend
+   git pull origin Frontend
    git branch -d feature/your-feature-name     # delete local branch
    git push origin --delete feature/your-feature-name   # delete remote branch
    ```
