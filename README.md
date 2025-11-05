@@ -73,8 +73,8 @@ The project has built-in git hooks to ensure code quality:
    Always branch off from the latest version of `main`.
 
    ```bash
-   git checkout main
-   git pull origin main
+   git checkout Frontend
+   git pull origin Frontend
    git checkout -b feature/your-feature-name
    ```
 
