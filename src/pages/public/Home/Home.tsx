@@ -88,9 +88,9 @@ export default function Home() {
 
       <div className='bg-white-100 p-8'>
         {/* Phần 4: Call to Action (CTA) */}
-        <section className='flex flex-col items-center justify-between rounded-lg bg-blue-100 p-8 text-white md:flex-row'>
+        <section className='flex flex-col items-center justify-between rounded-lg bg-blue-200 p-8 text-white md:flex-row'>
           <div>
-            <h3 className='mb-1 text-3xl font-bold text-blue-600'>Muốn tham gia chương trình?</h3>
+            <h3 className='mb-1 text-3xl font-bold text-blue-800'>Muốn tham gia chương trình?</h3>
             <p className='text-gray-700'>
               Sinh viên có thể đăng ký để được ghép Tutor/ Mentor phù hợp — nhanh chóng và minh bạch.
             </p>
