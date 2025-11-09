@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { X, ChevronDown } from "lucide-react";
-
 // --- INTERFACES ---
 
 interface Schedule {
@@ -159,7 +157,22 @@ function BookingModal({ isOpen, onClose }: BookingModalProps) {
             onClick={onClose}
             className='absolute right-[29px] top-[29px] h-[24px] w-[24px] text-white hover:opacity-80'
           >
-            <X className='h-full w-full' />
+            {/* THAY THẾ ICON 'X' BẰNG SVG */}
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='24'
+              height='24'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              className='h-full w-full'
+            >
+              <line x1='18' y1='6' x2='6' y2='18'></line>
+              <line x1='6' y1='6' x2='18' y2='18'></line>
+            </svg>
           </button>
         </div>
 
@@ -226,7 +239,21 @@ function BookingModal({ isOpen, onClose }: BookingModalProps) {
                 className='font-inter w-full rounded-[6px] border border-[#DFE4EA] bg-white px-[20px] py-[12px] text-[16px] leading-[24px] text-[#637381] focus:outline-none focus:ring-2 focus:ring-[#3758F9]'
                 readOnly
               />
-              <ChevronDown className='absolute right-[20px] top-1/2 h-[16px] w-[16px] -translate-y-1/2 text-[#637381]' />
+              {/* THAY THẾ ICON 'ChevronDown' BẰNG SVG */}
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                className='absolute right-[20px] top-1/2 h-[16px] w-[16px] -translate-y-1/2 text-[#637381]'
+              >
+                <polyline points='6 9 12 15 18 9'></polyline>
+              </svg>
             </div>
           </div>
 
@@ -241,7 +268,21 @@ function BookingModal({ isOpen, onClose }: BookingModalProps) {
                 className='font-inter w-full rounded-[6px] border border-[#DFE4EA] bg-white px-[20px] py-[12px] text-[16px] leading-[24px] text-[#637381] focus:outline-none focus:ring-2 focus:ring-[#3758F9]'
                 readOnly
               />
-              <ChevronDown className='absolute right-[20px] top-1/2 h-[16px] w-[16px] -translate-y-1/2 text-[#637381]' />
+              {/* THAY THẾ ICON 'ChevronDown' BẰNG SVG */}
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                className='absolute right-[20px] top-1/2 h-[16px] w-[16px] -translate-y-1/2 text-[#637381]'
+              >
+                <polyline points='6 9 12 15 18 9'></polyline>
+              </svg>
             </div>
           </div>
 
