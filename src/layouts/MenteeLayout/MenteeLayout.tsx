@@ -13,7 +13,7 @@ export default function MenteeLayout() {
         {/* Phần nội dung chính */}
         <div className='flex flex-1 flex-col'>
           {/* Header */}
-          <header className='flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm'>
+          <header className='flex h-16'>
             <Header />
           </header>
 
