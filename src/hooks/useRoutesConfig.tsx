@@ -6,9 +6,18 @@ import MenteeLayout from "../layouts/MenteeLayout";
 import Home from "../pages/public/Home/Home";
 import Tutor from "../pages/mentee/Tutor/Tutor";
 import Calendar from "../pages/mentee/Calendar";
+import Document from "../pages/mentee/Document";
+import Group from "../pages/mentee/Group";
+import Response from "../pages/mentee/Response";
+
+import Login from "../pages/public/Login";
 
 export default function useRoutesConfig() {
   const routes = [
+    {
+      path: path.LOGIN,
+      element: <Login />,
+    },
     {
       path: "/",
       element: <MenteeLayout />,
@@ -16,6 +25,9 @@ export default function useRoutesConfig() {
         { index: true, element: <Home /> },
         { path: path.TUTOR, element: <Tutor /> },
         { path: path.CALENDAR, element: <Calendar /> },
+        { path: path.DOCUMENT, element: <Document /> },
+        { path: path.GROUP, element: <Group /> },
+        { path: path.RESPONSE, element: <Response /> },
       ],
     },
   ];

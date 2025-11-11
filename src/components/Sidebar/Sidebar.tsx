@@ -12,7 +12,10 @@ export default function Sidebar() {
         <div className='mt-3 w-full'>
           <Tag tagName='Home' path={path.HOME} />
           <Tag tagName='Lịch học' path={path.CALENDAR} />
+          <Tag tagName='Nhóm' path={path.GROUP} />
           <Tag tagName='Tutor' path={path.TUTOR} />
+          <Tag tagName='Phản hồi' path={path.RESPONSE} />
+          <Tag tagName='Tài liệu' path={path.DOCUMENT} />
         </div>
       </div>
     </>
