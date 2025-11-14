@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { PlusCircle, ChevronDown, X, Upload } from "lucide-react";
 
+//=================================================================
+// 1. COMPONENT: DocumentFilters
+//=================================================================
 interface DocumentFiltersProps {
   onShareClick: () => void;
 }
@@ -58,6 +61,9 @@ function DocumentFilters({ onShareClick }: DocumentFiltersProps) {
   );
 }
 
+//=================================================================
+// 2. COMPONENT: DocumentTable
+//=================================================================
 interface Document {
   id: string;
   title: string;
@@ -133,6 +139,9 @@ function DocumentTable({ documents }: DocumentTableProps) {
   );
 }
 
+//=================================================================
+// 3. COMPONENT: ShareModal (ĐÃ SỬA LẠI)
+//=================================================================
 interface ShareModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -150,7 +159,7 @@ function ShareModal({ isOpen, onClose }: ShareModalProps) {
 
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/30'>
-      <div className='h-[600px] w-[640px] rounded-[20px] border border-black bg-white shadow-lg'>
+      <div className='w-[640px] rounded-[20px] border border-black bg-white shadow-lg'>
         <div className='relative flex h-[82px] items-center justify-center rounded-t-[10px] bg-[#3758F9]'>
           <h2 className='font-roboto text-[45px] font-medium leading-[52px] text-white'>Chia sẻ tài liệu</h2>
           <button
@@ -161,6 +170,7 @@ function ShareModal({ isOpen, onClose }: ShareModalProps) {
           </button>
         </div>
 
+        {/* Nội dung form */}
         <div className='px-[41px] pb-10 pt-8'>
           <div className='flex flex-col gap-6'>
             <div className='flex flex-col gap-[5px]'>
@@ -234,6 +244,7 @@ function ShareModal({ isOpen, onClose }: ShareModalProps) {
               />
             </div>
 
+            {/* Nút "Chia sẻ" đã được chuyển vào đây */}
             <button className='mx-auto mt-6 h-[50px] w-[143px] rounded-md bg-[#3758F9] px-7 py-[13px] transition-colors hover:bg-[#2947d6]'>
               <span className='font-inter text-base font-medium leading-6 text-white'>Chia sẻ</span>
             </button>
@@ -244,6 +255,9 @@ function ShareModal({ isOpen, onClose }: ShareModalProps) {
   );
 }
 
+//=================================================================
+// 4. COMPONENT: Document (Trang chính)
+//=================================================================
 const mockDocuments = [
   {
     id: "1",
