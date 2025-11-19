@@ -2,6 +2,7 @@ import { useRoutes } from "react-router-dom";
 import path from "../constants/path";
 
 import MenteeLayout from "../layouts/MenteeLayout";
+import MentorLayout from "../layouts/MentorLayout";
 
 import Home from "../pages/public/Home/Home";
 import Tutor from "../pages/mentee/Tutor/Tutor";
@@ -19,7 +20,7 @@ export default function useRoutesConfig() {
       element: <Login />,
     },
     {
-      path: "/",
+      path: "/mentee",
       element: <MenteeLayout />,
       children: [
         { index: true, element: <Home /> },
@@ -29,6 +30,11 @@ export default function useRoutesConfig() {
         { path: path.GROUP, element: <Group /> },
         { path: path.RESPONSE, element: <Response /> },
       ],
+    },
+    {
+      path: "/mentor",
+      element: <MentorLayout />,
+      children: [{ index: true, element: <Home /> }],
     },
   ];
   return useRoutes(routes);

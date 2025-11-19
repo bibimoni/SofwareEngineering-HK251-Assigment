@@ -1,13 +1,13 @@
 import { Outlet } from "react-router-dom";
-import SidebarMentee from "../../components/Sidebar/components/SidebarMentee";
+import SidebarMentor from "../../components/Sidebar/components/SidebarMentor";
 import Header from "../../components/Header/Header";
-export default function MenteeLayout() {
+export default function MentorLayout() {
   return (
     <>
       <div className='flex h-screen bg-gray-50'>
         {/* Sidebar cố định bên trái */}
         <aside className='w-64 border-r border-gray-200 bg-white shadow-md'>
-          <SidebarMentee />
+          <SidebarMentor />
         </aside>
 
         {/* Phần nội dung chính */}

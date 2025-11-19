@@ -1,7 +1,7 @@
-import logo from "../../assets/Logo-DH-Bach-Khoa-HCMUT.webp";
-import Tag from "./components/Tag";
-import path from "../../constants/path";
-export default function Sidebar() {
+import logo from "../../../../assets/Logo-DH-Bach-Khoa-HCMUT.webp";
+import Tag from "../Tag";
+import path from "../../../../constants/path";
+export default function SidebarMentee() {
   return (
     <>
       <div className='flex h-full w-full flex-col pl-3 pt-1'>
