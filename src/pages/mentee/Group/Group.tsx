@@ -43,7 +43,7 @@ const avatars = {
 };
 
 // Database
-const mockGroupData: Group[] = [
+const initialGroupData: Group[] = [
   {
     id: 1,
     groupName: "Hihi haha",
@@ -107,7 +107,13 @@ function GroupRow({ group, isLastRow }: GroupRowProps) {
 }
 
 export default function Group() {
+  const [groups, setGroups] = useState<Group[]>(initialGroupData);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCreateNewGroup = (newGroup: Group) => {
+    setGroups([newGroup, ...groups]);
+    setIsModalOpen(false);
+  };
   return (
     <main className='h-full w-full bg-gray-50 p-8'>
       <div className='overflow-hidden rounded-lg bg-white shadow-md'>
@@ -119,8 +125,8 @@ export default function Group() {
         </div>
 
         <div>
-          {mockGroupData.map((group, index) => (
-            <GroupRow key={group.id} group={group} isLastRow={index === mockGroupData.length - 1} />
+          {groups.map((group, index) => (
+            <GroupRow key={group.id} group={group} isLastRow={index === groups.length - 1} />
           ))}
         </div>
       </div>
@@ -140,6 +146,7 @@ export default function Group() {
           onClose={() => {
             setIsModalOpen(false);
           }}
+          onCreate={handleCreateNewGroup}
         />
       )}
     </main>

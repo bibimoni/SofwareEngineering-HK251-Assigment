@@ -7,6 +7,7 @@ const path = {
   GROUP: "nhom",
   DOCUMENT: "tai-lieu",
   RESPONSE: "phan-hoi",
+  NOTIFICATION: "thong-bao",
 };
 
 export default path;

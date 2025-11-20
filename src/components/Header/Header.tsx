@@ -2,6 +2,8 @@ import { FaSearch } from "react-icons/fa";
 import { FiBell, FiMessageSquare } from "react-icons/fi";
 import { ChevronDown } from "lucide-react";
 import logo from "../../assets/Logo-DH-Bach-Khoa-HCMUT.webp";
+import path from "../../constants/path";
+import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <>
@@ -16,7 +18,9 @@ export default function Header() {
             <FaSearch className='mr-1 cursor-pointer text-xl text-gray-400' />
           </div>
           <div className='flex h-full items-center justify-center gap-2'>
-            <FiBell />
+            <Link to={path.NOTIFICATION}>
+              <FiBell />
+            </Link>
             <FiMessageSquare />
             <img src={logo} alt='logo HCMUT' className='h-[42px] w-[42px] rounded-full bg-gray-200' />
             <ChevronDown className='font-normal' />

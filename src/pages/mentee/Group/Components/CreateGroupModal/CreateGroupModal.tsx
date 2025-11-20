@@ -1,4 +1,12 @@
 import React from "react";
+import { useState } from "react";
+
+interface Group {
+  id: number;
+  groupName: string;
+  currentMember: string[];
+  quantity: number;
+}
 
 const invitedMembers = [
   {
@@ -33,11 +41,29 @@ const invitedMembers = [
 
 interface CreateGroupModalProps {
   onClose: () => void;
+  onCreate: (group: Group) => void;
 }
 
-export default function CreateGroupModal({ onClose }: CreateGroupModalProps) {
+export default function CreateGroupModal({ onClose, onCreate }: CreateGroupModalProps) {
+  const [groupName, setGroupName] = useState("");
   const handleModalContentClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+  };
+
+  const handleCreateClick = () => {
+    if (!groupName.trim()) {
+      alert("Vui lòng nhập tên nhóm!");
+      return;
+    }
+
+    const newGroup: Group = {
+      id: Date.now(),
+      groupName: groupName,
+      currentMember: invitedMembers.map((m) => m.avatar),
+      quantity: invitedMembers.length,
+    };
+
+    onCreate(newGroup);
   };
 
   return (
@@ -65,6 +91,10 @@ export default function CreateGroupModal({ onClose }: CreateGroupModalProps) {
               type='text'
               id='groupName'
               placeholder='Tên nhóm'
+              value={groupName}
+              onChange={(e) => {
+                setGroupName(e.target.value);
+              }}
               className='mt-1 block w-full rounded-md border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm'
             />
           </div>
@@ -121,7 +151,10 @@ export default function CreateGroupModal({ onClose }: CreateGroupModalProps) {
 
           {/* Nút Tạo */}
           <div className='flex justify-center pt-2'>
-            <button className='rounded-md bg-blue-600 px-10 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700'>
+            <button
+              onClick={handleCreateClick}
+              className='rounded-md bg-blue-600 px-10 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700'
+            >
               Tạo
             </button>
           </div>
