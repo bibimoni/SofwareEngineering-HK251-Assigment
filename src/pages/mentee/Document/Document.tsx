@@ -1,5 +1,22 @@
-import { useState } from "react";
-import { PlusCircle, ChevronDown, X, Upload } from "lucide-react";
+import { useState, useRef } from "react";
+import { PlusCircle, ChevronDown, X, Upload, FileText, Trash2 } from "lucide-react";
+
+//=================================================================
+// TYPE DEFINITIONS
+//=================================================================
+interface DocumentData {
+  id: string;
+  title: string;
+  courseCode: string;
+  uploader: {
+    name: string;
+    email: string;
+    avatar?: string;
+  };
+  uploadDate: string;
+  size: string;
+  version: string;
+}
 
 //=================================================================
 // 1. COMPONENT: DocumentFilters
@@ -64,22 +81,8 @@ function DocumentFilters({ onShareClick }: DocumentFiltersProps) {
 //=================================================================
 // 2. COMPONENT: DocumentTable
 //=================================================================
-interface Document {
-  id: string;
-  title: string;
-  courseCode: string;
-  uploader: {
-    name: string;
-    email: string;
-    avatar?: string;
-  };
-  uploadDate: string;
-  size: string;
-  version: string;
-}
-
 interface DocumentTableProps {
-  documents: Document[];
+  documents: DocumentData[];
 }
 
 function DocumentTable({ documents }: DocumentTableProps) {
@@ -93,7 +96,7 @@ function DocumentTable({ documents }: DocumentTableProps) {
           <div className='w-[75px]'>Ngày đăng</div>
           <div className='w-[31px]'>Dung lượng</div>
           <div className='w-[76px]'>Miêu tả</div>
-          <div className='w-[120px]' /> {/* Placeholder cho button */}
+          <div className='w-[120px]' />
         </div>
 
         {/* === DANH SÁCH TÀI LIỆU === */}
@@ -140,14 +143,15 @@ function DocumentTable({ documents }: DocumentTableProps) {
 }
 
 //=================================================================
-// 3. COMPONENT: ShareModal (ĐÃ SỬA LẠI)
+// 3. COMPONENT: ShareModal
 //=================================================================
 interface ShareModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onShare: (newDoc: DocumentData) => void;
 }
 
-function ShareModal({ isOpen, onClose }: ShareModalProps) {
+function ShareModal({ isOpen, onClose, onShare }: ShareModalProps) {
   const [formData, setFormData] = useState({
     title: "",
     semester: "251",
@@ -155,7 +159,86 @@ function ShareModal({ isOpen, onClose }: ShareModalProps) {
     description: "",
   });
 
+  const [file, setFile] = useState<File | null>(null);
+  const [isDragActive, setIsDragActive] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   if (!isOpen) return null;
+
+  // --- FILE HANDLERS ---
+  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setIsDragActive(true);
+    } else if (e.type === "dragleave") {
+      setIsDragActive(false);
+    }
+  };
+
+  // FIX: Sử dụng kiểm tra length > 0 để tránh lỗi eslint
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragActive(false);
+
+    // files luôn tồn tại trong DataTransfer của DragEvent, kiểm tra length an toàn hơn
+    if (e.dataTransfer.files.length > 0) {
+      setFile(e.dataTransfer.files[0]);
+    }
+  };
+
+  // FIX: Sử dụng kiểm tra length > 0
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setFile(files[0]);
+    }
+  };
+
+  const handleRemoveFile = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setFile(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  // --- SUBMIT HANDLER ---
+  const handleSubmit = () => {
+    if (!formData.title) {
+      alert("Vui lòng nhập tiêu đề tài liệu!");
+      return;
+    }
+    if (!file) {
+      alert("Vui lòng chọn hoặc kéo thả file!");
+      return;
+    }
+
+    const newDoc: DocumentData = {
+      id: Date.now().toString(),
+      title: formData.title,
+      courseCode: "MT1001",
+      uploader: {
+        name: "BẠN (Người dùng hiện tại)",
+        email: "ban@hcmut.edu.vn",
+      },
+      uploadDate: new Date().toLocaleDateString("vi-VN"),
+      size: (file.size / (1024 * 1024)).toFixed(2) + "MB",
+      version: "Phiên bản 1",
+    };
+
+    onShare(newDoc);
+
+    setFormData({
+      title: "",
+      semester: "251",
+      course: "Giải tích 1",
+      description: "",
+    });
+    setFile(null);
+
+    alert("Chia sẻ tài liệu thành công!");
+    onClose();
+  };
 
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/30'>
@@ -170,12 +253,11 @@ function ShareModal({ isOpen, onClose }: ShareModalProps) {
           </button>
         </div>
 
-        {/* Nội dung form */}
         <div className='px-[41px] pb-10 pt-8'>
           <div className='flex flex-col gap-6'>
             <div className='flex flex-col gap-[5px]'>
               <label className='font-roboto text-base font-medium leading-6 tracking-[0.15px] text-[#212B36]'>
-                Tiêu đề
+                Tiêu đề <span className='text-red-500'>*</span>
               </label>
               <input
                 type='text'
@@ -203,7 +285,6 @@ function ShareModal({ isOpen, onClose }: ShareModalProps) {
                   className='font-inter h-[56px] rounded-md border border-[#DFE4EA] bg-white px-5 text-base text-[#9CA3AF] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#3758F9]'
                 />
               </div>
-
               <div className='flex flex-1 flex-col gap-[5px]'>
                 <label className='font-roboto text-base font-medium leading-6 tracking-[0.15px] text-[#111928]'>
                   Môn học/Khoá học
@@ -224,11 +305,37 @@ function ShareModal({ isOpen, onClose }: ShareModalProps) {
 
             <div className='flex flex-col gap-[5px]'>
               <label className='font-roboto text-base font-medium leading-6 tracking-[0.15px] text-[#212B36]'>
-                File
+                File <span className='text-red-500'>*</span>
               </label>
-              <div className='relative flex h-[56px] items-center rounded-md border border-[#DFE4EA] bg-white px-5'>
-                <span className='font-inter text-base text-[#9CA3AF]'>Drag your file here</span>
-                <Upload className='absolute right-5 h-6 w-6 text-[#8C8C8C]' />
+              <div
+                onDragEnter={handleDrag}
+                onDragLeave={handleDrag}
+                onDragOver={handleDrag}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+                className={`relative flex h-[56px] cursor-pointer items-center rounded-md border border-[#DFE4EA] bg-white px-5 transition-colors ${
+                  isDragActive ? "border-2 border-dashed border-[#3758F9] bg-blue-50" : ""
+                }`}
+              >
+                <input ref={fileInputRef} type='file' className='hidden' onChange={handleChangeFile} />
+                {file ? (
+                  <div className='flex w-full items-center justify-between'>
+                    <div className='flex items-center gap-2 overflow-hidden'>
+                      <FileText className='h-5 w-5 text-[#3758F9]' />
+                      <span className='font-inter truncate text-base text-[#212B36]'>{file.name}</span>
+                    </div>
+                    <button onClick={handleRemoveFile} className='rounded-full p-1 hover:bg-gray-100' title='Xoá file'>
+                      <Trash2 className='h-4 w-4 text-red-500' />
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <span className='font-inter text-base text-[#9CA3AF]'>
+                      {isDragActive ? "Thả file vào đây" : "Kéo thả hoặc chọn file"}
+                    </span>
+                    <Upload className='absolute right-5 h-6 w-6 text-[#8C8C8C]' />
+                  </>
+                )}
               </div>
             </div>
 
@@ -244,8 +351,10 @@ function ShareModal({ isOpen, onClose }: ShareModalProps) {
               />
             </div>
 
-            {/* Nút "Chia sẻ" đã được chuyển vào đây */}
-            <button className='mx-auto mt-6 h-[50px] w-[143px] rounded-md bg-[#3758F9] px-7 py-[13px] transition-colors hover:bg-[#2947d6]'>
+            <button
+              onClick={handleSubmit}
+              className='mx-auto mt-6 h-[50px] w-[143px] rounded-md bg-[#3758F9] px-7 py-[13px] transition-colors hover:bg-[#2947d6]'
+            >
               <span className='font-inter text-base font-medium leading-6 text-white'>Chia sẻ</span>
             </button>
           </div>
@@ -258,7 +367,7 @@ function ShareModal({ isOpen, onClose }: ShareModalProps) {
 //=================================================================
 // 4. COMPONENT: Document (Trang chính)
 //=================================================================
-const mockDocuments = [
+const initialDocuments: DocumentData[] = [
   {
     id: "1",
     title: "Giáo trình BT Giải tích 1",
@@ -311,6 +420,11 @@ const mockDocuments = [
 
 export default function Document() {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [documents, setDocuments] = useState<DocumentData[]>(initialDocuments);
+
+  const handleAddNewDocument = (newDoc: DocumentData) => {
+    setDocuments([newDoc, ...documents]);
+  };
 
   return (
     <>
@@ -320,13 +434,14 @@ export default function Document() {
             setIsShareModalOpen(true);
           }}
         />
-        <DocumentTable documents={mockDocuments} />
+        <DocumentTable documents={documents} />
       </div>
       <ShareModal
         isOpen={isShareModalOpen}
         onClose={() => {
           setIsShareModalOpen(false);
         }}
+        onShare={handleAddNewDocument}
       />
     </>
   );
