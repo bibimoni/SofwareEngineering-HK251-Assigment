@@ -11,6 +11,7 @@ export default function SidebarMentee() {
         </div>
         <div className='mt-3 w-full'>
           <Tag tagName='Home' path={path.HOME} />
+          <Tag tagName='Lịch của tôi' path={path.MYCALENDAR} />
           <Tag tagName='Lịch học' path={path.CALENDAR} />
           <Tag tagName='Nhóm' path={path.GROUP} />
           <Tag tagName='Tutor' path={path.TUTOR} />
