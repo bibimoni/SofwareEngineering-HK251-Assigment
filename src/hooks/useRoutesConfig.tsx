@@ -11,6 +11,7 @@ import Document from "../pages/mentee/Document";
 import Group from "../pages/mentee/Group";
 import Response from "../pages/mentee/Response";
 import Notification from "../pages/mentee/Notification";
+import MyCalendar from "../pages/mentee/MyCalendar";
 
 import Login from "../pages/public/Login";
 
@@ -31,6 +32,7 @@ export default function useRoutesConfig() {
         { path: path.GROUP, element: <Group /> },
         { path: path.RESPONSE, element: <Response /> },
         { path: path.NOTIFICATION, element: <Notification /> },
+        { path: path.MYCALENDAR, element: <MyCalendar /> },
       ],
     },
     {
