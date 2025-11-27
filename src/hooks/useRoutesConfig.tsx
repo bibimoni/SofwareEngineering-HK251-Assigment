@@ -22,7 +22,7 @@ export default function useRoutesConfig() {
       element: <Login />,
     },
     {
-      path: "/mentee",
+      path: "/",
       element: <MenteeLayout />,
       children: [
         { index: true, element: <Home /> },
